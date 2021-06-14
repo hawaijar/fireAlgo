@@ -1,0 +1,23 @@
+{
+  "name": "fireAlgo",
+  "version": "1.0.0",
+  "description": "A curated list of common algorithmic problems, their categories, solving patterns and solutions.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hawaijar/fireAlgo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hawaijar/fireAlgo/issues"
+  },
+  "homepage": "https://github.com/hawaijar/fireAlgo#readme",
+  "dependencies": {
+    "prettier": "^2.3.1"
+  }
+}
