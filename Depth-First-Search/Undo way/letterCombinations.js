@@ -21,18 +21,22 @@ const MAPPING = {
 
 function letterCombinations(digits) {
 	const result = [];
-	function dfs(prefix = '', remainingDigits) {
-		if(remainingDigits === '') {
-			result.push(prefix);
+	function dfs(str = '', index) {
+		if(index === digits.length) {
+			result.push(str.slice());
 		}
 		else {
-			const letters = MAPPING[remainingDigits[0]];
-			for(let i = 0; i < letters.length; i++) {
-				dfs(prefix + letters[i], remainingDigits.slice(1));
+			const letters = MAPPING[digits[index]];
+			for(let letter of letters) {
+				// append letter to str
+				str += letter;
+				dfs(str, index + 1);
+				// *undo* append letter to str
+				str = str.substr(0, str.length - 1);
 			}
 		}
 	}
-	dfs('', digits);
+	dfs('', 0);
 	return result;
 }
 
