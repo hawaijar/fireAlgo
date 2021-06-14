@@ -31,7 +31,7 @@ function letterCombinations(digits) {
 				// append letter to str
 				str += letter;
 				dfs(str, index + 1);
-				// *undo* append letter to str
+				// *undo* (remove) appended letter from str
 				str = str.substr(0, str.length - 1);
 			}
 		}
