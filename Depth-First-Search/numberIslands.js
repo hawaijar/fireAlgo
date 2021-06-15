@@ -33,7 +33,7 @@ function numIslands(grid) {
   for (let i = 0; i < grid.length; i++) {
     for (let j = 0; j < grid[i].length; j++) {
       if (grid[i][j] === "1") {
-        count += bfs(grid, i, j);
+        count += dfs(grid, i, j);
       }
     }
   }
@@ -42,7 +42,7 @@ function numIslands(grid) {
 
 const VISITED = "2"; // 0: water, 1: land
 
-function bfs(grid, row, col) {
+function dfs(grid, row, col) {
   // find all the neighbours of grid[row][col] and reset any '1's to '0's.
   // check the boundaries of the grid to identify invalid moves
   if (
@@ -57,13 +57,22 @@ function bfs(grid, row, col) {
   }
   grid[row][col] = VISITED;
   // traverse north direction
-  bfs(grid, row - 1, col);
+  dfs(grid, row - 1, col);
   // traverse south direction
-  bfs(grid, row + 1, col);
+  dfs(grid, row + 1, col);
   // traverse east direction
-  bfs(grid, row, col - 1);
+  dfs(grid, row, col - 1);
   // traverse west direction
-  bfs(grid, row, col + 1);
+  dfs(grid, row, col + 1);
 
   return 1;
 }
+
+const grid = [
+  ["1", "1", "0", "0", "0"],
+  ["1", "1", "0", "0", "0"],
+  ["0", "0", "1", "0", "0"],
+  ["0", "0", "0", "1", "1"],
+];
+
+console.log(numIslands(grid))
