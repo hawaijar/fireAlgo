@@ -26,16 +26,23 @@ function minMeetingRooms(intervals) {
   let countRoom = 0;
   let [startPointer, endPointer] = [0, 0];
   while (startPointer < startTimes.length) {
-    if(startTimes[startPointer] >= endTimes[endPointer]) {
-    	// reuse the free room
-		countRoom -= 1;
-		endPointer += 1;
-	}
-    countRoom += 1;
+    if (startTimes[startPointer] >= endTimes[endPointer]) {
+      // reuse the free room
+      endPointer += 1;
+    } else {
+      // allocate a new room
+      countRoom += 1;
+    }
     startPointer += 1;
   }
   return countRoom;
 }
 
-const intervals = [[0,30],[5,10],[15,20]]
+const intervals = [
+  [0, 30],
+  [5, 10],
+  [15, 20],
+];
 console.log(minMeetingRooms(intervals));
+
+
