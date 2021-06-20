@@ -2,8 +2,10 @@ class MinMaxHeap {
   constructor(isMinHeap = true) {
     this.heap = [null];
     this.isMinHeap = isMinHeap;
+    this.count = 0;
   }
   insert(num) {
+    this.count += 1;
     this.heap.push(num);
     let idx = this.heap.length - 1;
     let parentIdx = Math.floor(idx / 2);
@@ -29,6 +31,7 @@ class MinMaxHeap {
     if (this.heap.length === 1) {
       throw new Error("Heap is empty");
     }
+    this.count -= 1;
     let smallest = this.heap[1];
     // only 1 item case
     if (this.heap.length === 2) {
@@ -45,7 +48,12 @@ class MinMaxHeap {
     // more than two items case
     let parentIdx = 1;
     let leftChildIdx = 2 * parentIdx;
+    if(leftChildIdx  >= this.heap.length) return;
     let rightChildIdx = 2 * parentIdx + 1;
+    if(rightChildIdx >= this.heap.length) {
+    	rightChildIdx = leftChildIdx;
+	}
+
     while (
       this.isMinHeap
         ? this.heap[parentIdx] >= this.heap[leftChildIdx] ||
@@ -82,40 +90,46 @@ class MinMaxHeap {
     return smallest;
   }
   peek() {
+    if (this.count === 0) return 0;
     return this.heap[1];
+  }
+  size() {
+    return this.count;
   }
 }
 
-let heap = new MinMaxHeap(false);
-heap.insert(20);
-heap.insert(19);
-heap.insert(17);
-heap.insert(13);
-heap.insert(15);
-heap.insert(8);
-heap.insert(5);
-heap.insert(11);
-heap.insert(9);
-heap.insert(10);
-heap.insert(2);
-console.log(heap.heap);
+module.exports = MinMaxHeap;
 
-console.log(heap.peek());
-heap.remove();
-console.log(heap.peek());
-heap.remove();
-console.log(heap.peek());
-heap.remove();
-console.log(heap.peek());
-heap.remove();
-console.log(heap.peek());
-heap.remove();
-console.log(heap.peek());
-heap.remove();
-console.log(heap.peek());
-heap.remove();
-console.log(heap.peek());
-heap.remove();
-console.log(heap.peek());
-heap.remove();
-console.log(heap.peek());
+// let heap = new MinMaxHeap(false);
+// heap.insert(20);
+// heap.insert(19);
+// heap.insert(17);
+// heap.insert(13);
+// heap.insert(15);
+// heap.insert(8);
+// heap.insert(5);
+// heap.insert(11);
+// heap.insert(9);
+// heap.insert(10);
+// heap.insert(2);
+
+// console.log(heap.heap);
+// console.log(heap.peek());
+// heap.remove();
+// console.log(heap.peek());
+// heap.remove();
+// console.log(heap.peek());
+// heap.remove();
+// console.log(heap.peek());
+// heap.remove();
+// console.log(heap.peek());
+// heap.remove();
+// console.log(heap.peek());
+// heap.remove();
+// console.log(heap.peek());
+// heap.remove();
+// console.log(heap.peek());
+// heap.remove();
+// console.log(heap.peek());
+// heap.remove();
+// console.log(heap.peek());
