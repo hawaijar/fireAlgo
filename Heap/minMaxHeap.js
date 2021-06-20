@@ -32,18 +32,18 @@ class MinMaxHeap {
       throw new Error("Heap is empty");
     }
     this.count -= 1;
-    let smallest = this.heap[1];
+    let priority = this.heap[1];
     // only 1 item case
     if (this.heap.length === 2) {
       this.heap.length = 1; // same as: this.heap.splice(2)
-      return smallest;
+      return priority;
     }
 
     this.heap[1] = this.heap[this.heap.length - 1];
     this.heap.splice(this.heap.length - 1);
     // only two items case
     if (this.heap.length === 2) {
-      return smallest;
+      return priority;
     }
     // more than two items case
     let parentIdx = 1;
@@ -87,7 +87,7 @@ class MinMaxHeap {
         break;
       }
     }
-    return smallest;
+    return priority;
   }
   peek() {
     if (this.count === 0) return 0;
