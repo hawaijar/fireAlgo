@@ -1,3 +1,22 @@
+function constructMinHeightBst(array, bst = null, startIndex, endIndex) {
+  // base case
+  if (startIndex > endIndex) return;
+
+  const midIndex = Math.floor((startIndex + endIndex) / 2);
+  const value = array[midIndex];
+  if (bst === null) {
+    bst = new BST(value);
+  } else {
+    bst.insert(value);
+  }
+  constructMinHeightBst(array, bst, startIndex, midIndex - 1);
+  constructMinHeightBst(array, bst, midIndex + 1, endIndex);
+  return bst;
+}
+function minHeightBst(array) {
+  return constructMinHeightBst(array, null, 0, array.length - 1);
+}
+
 class BST {
   constructor(value = null) {
     this.value = value;
