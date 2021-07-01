@@ -13,8 +13,27 @@ function constructMinHeightBst(array, bst = null, startIndex, endIndex) {
   constructMinHeightBst(array, bst, midIndex + 1, endIndex);
   return bst;
 }
+/* --- Create a minimum/height BST from a sorted array ---------- */
 function minHeightBst(array) {
   return constructMinHeightBst(array, null, 0, array.length - 1);
+}
+/* --- Find largest kth value from BST -------------------------- */
+function findKthLargestValueInBst(tree, k) {
+  let count = 0;
+  let result = -1;
+  function recur(bst) {
+    if (bst === null) return;
+
+    recur(bst.right);
+    count += 1;
+    if(count === k) {
+    	result = bst.value;
+    	return;
+	}
+    recur(bst.left);
+  }
+  recur(tree);
+  return result;
 }
 
 class BST {
@@ -23,11 +42,11 @@ class BST {
     this.left = null;
     this.right = null;
   }
-
   insert(value) {
     if (this === null) {
       return new BST(value);
     }
+
     function addNode(node) {
       // base case
       if (node === null) {
@@ -43,7 +62,6 @@ class BST {
 
     return addNode(this);
   }
-
   contains(value) {
     if (this.value === null) return false;
     const queue = [this];
@@ -55,12 +73,10 @@ class BST {
     }
     return false;
   }
-
   minValue() {
     if (this.left === null) return this.value;
     return this.left.minValue();
   }
-
   remove(value) {
     function deleteNode(value, node, parent = null) {
       if (value < node.value) {
@@ -113,34 +129,32 @@ class BST {
 
     deleteNode(value, this);
   }
-
   // in-order
   traverse() {
+    const result = [];
     if (this.value === null) return "Empty tree";
+
     function inOrder(node) {
       //base case
       if (node === null) return "";
       inOrder(node.left);
-      console.log(" " + node.value);
+      result.push(node.value);
       inOrder(node.right);
     }
+
     inOrder(this);
+    console.log(result);
   }
 }
 
-const bst = new BST(10);
-bst.insert(5).insert(15).insert(2).insert(5);
-bst.insert(13);
-bst.insert(22);
+const bst = new BST(5);
+bst.insert(4);
+bst.insert(6);
+bst.insert(3);
+bst.insert(4);
+bst.insert(6);
+bst.insert(7);
 bst.insert(1);
-bst.insert(14);
-bst.insert(12);
-bst.insert(10);
-bst.insert(15);
 
 bst.traverse();
-
-bst.remove(10);
-
-console.log(".........");
-bst.traverse();
+console.log(findKthLargestValueInBst(bst, 4));
