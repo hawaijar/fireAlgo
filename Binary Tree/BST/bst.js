@@ -1,3 +1,49 @@
+function reconstructBst(preOrderTraversalValues = []) {
+  function construct(array, bst) {
+    if (array.length === 0) return;
+    if (array.length === 1) {
+      bst.insert(array[0]);
+      return;
+    }
+    const root = array[0];
+    bst.insert(root);
+    let small = null;
+    let large = null;
+    for (let i = 1; i < array.length; i++) {
+      const num = array[i];
+      if (num <= root) {
+        if (small === null) {
+          small = i;
+        }
+      }
+      if (num > root) {
+        if (large === null) {
+          large = i;
+        }
+      }
+
+      if (small !== null && large !== null) break;
+    }
+    // ascending case
+    if (small === null && large !== null) {
+      construct(array.slice(1), bst);
+    }
+    // descending case
+    else if (small !== null && large === null) {
+      construct(array.slice(1), bst);
+    } else {
+      construct(array.slice(small, large), bst);
+      construct(array.slice(large), bst);
+    }
+  }
+  let bst;
+  if (preOrderTraversalValues.length > 0) {
+    bst = new BST(preOrderTraversalValues[0]);
+  }
+  construct(preOrderTraversalValues.slice(1), bst);
+  return bst;
+}
+
 function constructMinHeightBst(array, bst = null, startIndex, endIndex) {
   // base case
   if (startIndex > endIndex) return;
@@ -26,10 +72,10 @@ function findKthLargestValueInBst(tree, k) {
 
     recur(bst.right);
     count += 1;
-    if(count === k) {
-    	result = bst.value;
-    	return;
-	}
+    if (count === k) {
+      result = bst.value;
+      return;
+    }
     recur(bst.left);
   }
   recur(tree);
@@ -147,14 +193,18 @@ class BST {
   }
 }
 
-const bst = new BST(5);
-bst.insert(4);
-bst.insert(6);
-bst.insert(3);
-bst.insert(4);
-bst.insert(6);
-bst.insert(7);
-bst.insert(1);
+// const bst = new BST(5);
+// bst.insert(4);
+// bst.insert(6);
+// bst.insert(3);
+// bst.insert(4);
+// bst.insert(6);
+// bst.insert(7);
+// bst.insert(1);
+//
+// bst.traverse();
+// console.log(findKthLargestValueInBst(bst, 4));
 
+const bst = reconstructBst([2, 0, 1, 4, 3, 3]);
 bst.traverse();
-console.log(findKthLargestValueInBst(bst, 4));
+console.log(JSON.stringify(bst, null, 2));
