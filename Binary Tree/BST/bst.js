@@ -82,6 +82,25 @@ function findKthLargestValueInBst(tree, k) {
   return result;
 }
 
+/* --- Find diameter of BST (same with Binary Tree) ---- */
+// Refer: https://www.youtube.com/watch?v=ey7DYc9OANo
+function height(tree) {
+  if (tree === null) return 0;
+  const leftHeight = height(tree.left);
+  const rightHeight = height(tree.right);
+
+  return 1 + leftHeight + rightHeight;
+}
+function diameter(tree) {
+  if (tree === null) return 0;
+  const diameterWhenPassingRoot = 1 + height(tree.left) + height(tree.right);
+  const leftDiameter = diameter(tree.left);
+  const rightDiameter = diameter(tree.right);
+  const diameterWhenNotPassingRoot = Math.max(leftDiameter, rightDiameter);
+
+  return Math.max(diameterWhenPassingRoot, diameterWhenNotPassingRoot);
+}
+
 class BST {
   constructor(value = null) {
     this.value = value;
