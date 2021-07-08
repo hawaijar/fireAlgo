@@ -6,6 +6,22 @@ class BinaryTree {
     this.parent = null;
   }
 }
+function height(tree) {
+  if (!tree) return -1;
+  return 1 + Math.max(height(tree.left), height(tree.right));
+}
+function balanceFactor(tree) {
+  if (!tree) return 0;
+  return height(tree.left) - height(tree.right);
+}
+function isBalance(tree) {
+  if (!tree) return true;
+  return Math.abs(balanceFactor(tree)) <= 1;
+}
+function isTreeBalance(tree) {
+  if (!tree) return true;
+  return isBalance(tree) && isBalance(tree.left) && isBalance(tree.right);
+}
 function populate(array) {
   let tree = null;
   const nodes = array.map((obj) => new BinaryTree(obj.value));
@@ -52,15 +68,31 @@ function findInOrderSuccessor(tree, node) {
 }
 
 const arr = [
-  { id: "1", left: "2", parent: null, right: "3", value: 1 },
-  { id: "2", left: "4", parent: "1", right: "5", value: 2 },
-  { id: "3", left: null, parent: "1", right: null, value: 3 },
-  { id: "4", left: "6", parent: "2", right: null, value: 4 },
-  { id: "5", left: null, parent: "2", right: null, value: 5 },
-  { id: "6", left: null, parent: "4", right: null, value: 6 },
+  { id: "1", left: "-2", parent: null, right: null, value: 1 },
+  { id: "-2", left: "-3", right: null, value: -1 },
+  { id: "-3", left: "-4", right: null, value: -2 },
+  { id: "-4", left: "-5", right: null, value: -3 },
+  { id: "-5", left: "-6", right: null, value: -4 },
+  { id: "-6", left: null, right: null, value: -6 },
 ];
-const [tree, nodes] = populate(arr);
-const node = nodes.find((n) => n.value === 2);
+const tree = new BinaryTree(1);
+const two = new BinaryTree(2);
+const four = new BinaryTree(4);
+const four2 = new BinaryTree(4);
+const five = new BinaryTree(5);
+const six = new BinaryTree(6);
+
+tree.left = two;
+tree.right = four;
+two.left = four2;
+four.right = five;
+four2.left = six;
+
+// const [tree, nodes] = populate(arr);
+// const node = nodes.find((n) => n.value === 2);
 // console.log(JSON.stringify(tree, null, 2));
 // inOrderTraverse(tree);
-console.log(findInOrderSuccessor(tree, node));
+// console.log(findInOrderSuccessor(tree, node));
+console.log(height(tree));
+console.log(balanceFactor(tree));
+console.log(isTreeBalance(tree));
