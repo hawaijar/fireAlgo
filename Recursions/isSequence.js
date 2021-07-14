@@ -18,5 +18,5 @@ function isSequence(list = []) {
   const dir = list[0] < list[1] ? "ASC" : "DESC";
   return sequence(list, dir);
 }
-const l = [1, 2, 3, 13, 20, 90];
+const l = [7, 6, 5, 4, 3, 2, 1, -100];
 console.log(isSequence(l));
