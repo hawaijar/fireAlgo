@@ -6,15 +6,20 @@ were broken into on the same night.
 Given an integer array nums representing the amount of money of each house, return the maximum amount of money you can rob
 tonight without alerting the police.
  */
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
 function rob(nums) {
   function max(i, S, cache = {}) {
     if (i < 0) return 0;
     if (i === 0) return S[0];
 
     if (i in cache) return cache[i];
+    cache[i] = Math.max(S[i] + max(i - 2, S, cache), max(i - 1, S, cache));
 
-    return Math.max(S[i] + max(i - 2, S), max(i - 1, S));
+    return cache[i];
   }
 
-  return max(nums.length - 1, nums);
+  return max(nums.length - 1, nums, {});
 }
