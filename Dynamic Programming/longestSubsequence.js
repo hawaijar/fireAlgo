@@ -1,20 +1,39 @@
 function longestSubSequence(nums) {
-  function longest(nums, i, cache = {}) {
-    if (i === 0) return 1;
-    if (i in cache) return cache[i];
-    let max = 1;
+  let longestAtEndings = new Array(nums.length).fill(1);
+  let previousPositions = new Array(nums.length).fill(null);
+  let temp;
+  let max = -Infinity;
+  for (let i = 1; i < nums.length; i++) {
     for (let j = i - 1; j >= 0; j--) {
-      let temp = longest(nums, j, cache);
-      if (nums[i] > nums[j]) {
-        temp += 1;
+      if (nums[j] < nums[i]) {
+        temp = 1 + longestAtEndings[j];
+        if (temp > longestAtEndings[i]) {
+          previousPositions[i] = j;
+        }
+        longestAtEndings[i] = Math.max(longestAtEndings[i], temp);
+        max = Math.max(max, longestAtEndings[i]);
       }
-      max = Math.max(max, temp);
     }
-    cache[i] = max;
-    return max;
   }
-  return longest(nums, nums.length - 1, {});
+  let maxIndex = 0;
+  let maxValue = -Infinity;
+  for (let i = 0; i < nums.length; i++) {
+    if (longestAtEndings[i] > maxValue) {
+      maxValue = longestAtEndings[i];
+      maxIndex = i;
+    }
+  }
+  const sequence = [];
+  while (true) {
+    sequence.unshift(nums[maxIndex]);
+    if (previousPositions[maxIndex] !== null) {
+      maxIndex = previousPositions[maxIndex];
+    } else {
+      break;
+    }
+  }
+  return sequence;
 }
 
-const nums = [1, 4, 6, 1, 2, 10];
+const nums = [5, 7, -24, 12, 10, 2, 3, 12, 5, 6, 35];
 console.log(longestSubSequence(nums));
