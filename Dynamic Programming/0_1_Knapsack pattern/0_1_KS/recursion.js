@@ -1,3 +1,5 @@
+const findSums = require("../../../Recursions/Backtrackking/combinationalSum");
+
 /*
 	Consider a list of items where each item represents the cost and weight of the item, for a given
 	capacity, find the maximum cost that can be yield from the given items.
@@ -73,5 +75,7 @@ const c = 100;
 // console.log(KS(i, c, i.length));
 const profits = [1, 6, 10, 16];
 const weights = [1, 2, 3, 5];
-console.log(solveKnapsack(profits, weights, 7));
-console.log(solveKnapsack(profits, weights, 6));
+const result = [];
+const ks = solveKnapsack(profits, weights, 6);
+console.log(ks);
+console.log(findSums(profits, ks)[0]);

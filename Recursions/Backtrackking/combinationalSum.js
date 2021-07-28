@@ -39,4 +39,6 @@ function findSums(list, k) {
 
 const list = [10, 1, 2, 7, 6, 1, 5];
 const k = 8;
-console.log(findSums(list, k));
+// console.log(findSums(list, k));
+
+module.exports = findSums;
